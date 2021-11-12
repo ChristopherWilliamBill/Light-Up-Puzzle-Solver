@@ -1,0 +1,1 @@
+import file from txt using BufferedReader : https://stackoverflow.com/questions/14487737/how-do-i-read-a-file-into-a-2d-array

@@ -85,12 +85,40 @@ public class Individual {
                     }
 
                     //JIKA I J DI UJUNG KIRI ATAS
+                    else if(j == 0 && i == 0){
+                        if(this.array[i+1][j] == 0 && this.array[i][j+1] == 0){
+                            this.fitness += 1;
+                        }else{
+                            this.fitness -= 1;
+                        }
+                    }
 
                     //JIKA I J DI UJUNG KANAN ATAS
+                    else if(j == this.array[j].length && i == 0){
+                        if(this.array[i+1][j] == 0 && this.array[i][j-1] == 0){
+                            this.fitness += 1;
+                        }else{
+                            this.fitness -= 1;
+                        }
+                    }
 
                     //JIKA I J DI UJUNG KIRI BAWAH
+                    else if(j == 0 && i == this.array[i].length){
+                        if(this.array[i][j+1] == 0 && this.array[i-1][j] == 0){
+                            this.fitness += 1;
+                        }else{
+                            this.fitness -= 1;
+                        }
+                    }
 
                     //JIKA I J DI UJUNG KANAN BAWAH
+                    else if(j == this.array[j].length && i == this.array[i].length){
+                        if(this.array[i-1][j] == 0 && this.array[i][j-1] == 0){
+                            this.fitness += 1;
+                        }else{
+                            this.fitness -= 1;
+                        }
+                    }
                 }
             }
         } 

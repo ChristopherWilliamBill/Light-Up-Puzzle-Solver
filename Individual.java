@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Individual {
     private int[][] array;
     private int fitness;
@@ -122,5 +124,25 @@ public class Individual {
                 }
             }
         } 
+    }
+
+    public static void main(String[] args) {
+
+        Random r = new Random();
+
+        int low = 4;
+        int high = 6;
+
+        int temp[][] = new int[7][7];
+        for(int i = 0; i < 7; i++){
+            for(int j = 0; j < 7; j++){
+                temp[i][j] = r.nextInt(high - low) + low;
+            }
+        }
+        Individual i = new Individual(temp);
+
+        i.setFitness();
+
+        System.out.println();
     }
 }

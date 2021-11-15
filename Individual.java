@@ -1,5 +1,6 @@
 import java.util.Random;
 import java.io.*;
+
 public class Individual {
     private int[][] array;
     private int fitness;
@@ -209,6 +210,35 @@ public class Individual {
             reader.close(); // never forget to close a stream.
         } catch (IOException e) { }
         return numArray;
+    }
+
+    public Individual doCrossover(Individual other){
+        //2 array akan dibagi 2 dan digabungkan pada titik pembagian
+
+        int length = this.array.length;
+
+        //titik pembagian adalah panjang array dibagi 2
+        int crossPoint = Math.ceil(length/ 2);
+
+        Individual child = new Individual(new int[length][length]);
+
+        for(int i = 0; i < crossPoint; i++){
+            for(int j = 0; j < this.array[i].length; j++){
+                child.array[i][j] = this.array[i][j];
+            }
+        }
+
+        for(int i = crossPoint; i < length; i++){
+            for(int j = 0; j < this.array[i].length; j++){
+                child.array[i][j] = other.array[i][j];
+            }
+        }
+
+        return child;
+    }
+
+    public void doMutation(){
+        
     }
 
     public static void main(String[] args) throws IOException {

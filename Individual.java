@@ -50,7 +50,7 @@ public class Individual {
                     //JIKA I DAN J BUKAN DI UJUNG
                     if(i != 0 && i != this.array.length - 1 && j != 0 && j != this.array[i].length - 1){
                         //JIKA SEKELILINGNYA ADALAH 0 (BENER) MAKA FITNESS += 1
-                        if(this.array[i+1][j] == 0 && this.array[i-1][j] == 0 && this.array[i][j+1] == 0 && this.array[i][j-1] == 0){
+                        if((this.array[i+1][j] == 6 || this.array[i+1][j] == -5) && (this.array[i-1][j] == 6 || this.array[i-1][j] == -5 )&& (this.array[i][j+1] == -5 || this.array[i][j+1] == 6 )&& (this.array[i][j-1] == -5 || this.array[i][j-1] == 6)){
                             this.fitness += 1;
                         }else{
                             this.fitness -= 1;
@@ -59,7 +59,7 @@ public class Individual {
 
                     //JIKA I DI UJUNG ATAS DAN J DI TENGAH
                     else if(i == 0 && j != 0 && j != this.array[i].length - 1){
-                        if(this.array[i+1][j] == 0 && this.array[i][j+1] == 0 && this.array[i][j-1] == 0){
+                        if((this.array[i+1][j] == 6 || this.array[i+1][j] == -5)  && (this.array[i][j+1] == -5 || this.array[i][j+1] == 6 )&&  (this.array[i][j-1] == -5 || this.array[i][j-1] == 6)){
                             this.fitness += 1;
                         }else{
                             this.fitness -= 1;
@@ -68,7 +68,7 @@ public class Individual {
 
                     //JIKA I DI UJUNG BAWAH DAN J DI TENGAH
                     else if(i == this.array.length -1 && j != 0 && j != this.array[i].length - 1){
-                        if(this.array[i-1][j] == 0 && this.array[i][j+1] == 0 && this.array[i][j-1] == 0){
+                        if((this.array[i-1][j] == 6 || this.array[i-1][j] == -5 )&& (this.array[i][j+1] == -5 || this.array[i][j+1] == 6 ) && (this.array[i][j-1] == -5 || this.array[i][j-1] == 6)){
                             this.fitness += 1;
                         }else{
                             this.fitness -= 1;
@@ -77,7 +77,7 @@ public class Individual {
 
                     //JIKA J DI UJUNG KIRI DAN I DI TENGAH
                     else if(j == 0 && i != 0 && i != this.array.length - 1){
-                        if(this.array[i][j+1] == 0 && this.array[i+1][j] == 0 && this.array[i-1][j] == 0){
+                        if( (this.array[i][j+1] == -5 || this.array[i][j+1] == 6 ) &&(this.array[i+1][j] == 6 || this.array[i+1][j] == -5) &&(this.array[i-1][j] == 6 || this.array[i-1][j] == -5 )){
                             this.fitness += 1;
                         }else{
                             this.fitness -= 1;
@@ -86,7 +86,7 @@ public class Individual {
 
                     //JIKA J DI UJUNG KANAN DAN I DI TENGAH
                     else if(j == this.array[i].length -1 && i != 0 && i != this.array.length -1){
-                        if(this.array[i][j-1] == 0 && this.array[i+1][j] == 0 && this.array[i-1][j] == 0){
+                        if( (this.array[i][j-1] == -5 || this.array[i][j-1] == 6) &&(this.array[i+1][j] == 6 || this.array[i+1][j] == -5)&& (this.array[i-1][j] == 6 || this.array[i-1][j] == -5 )){
                             this.fitness += 1;
                         }else{
                             this.fitness -= 1;
@@ -95,7 +95,7 @@ public class Individual {
 
                     //JIKA I J DI UJUNG KIRI ATAS
                     else if(j == 0 && i == 0){
-                        if(this.array[i+1][j] == 0 && this.array[i][j+1] == 0){
+                        if((this.array[i+1][j] == 6 || this.array[i+1][j] == -5) && (this.array[i][j+1] == -5 || this.array[i][j+1] == 6 )){
                             this.fitness += 1;
                         }else{
                             this.fitness -= 1;
@@ -104,7 +104,7 @@ public class Individual {
 
                     //JIKA I J DI UJUNG KANAN ATAS
                     else if(j == this.array[j].length - 1 && i == 0){
-                        if(this.array[i+1][j] == 0 && this.array[i][j-1] == 0){
+                        if((this.array[i+1][j] == 6 || this.array[i+1][j] == -5) && (this.array[i][j-1] == -5 || this.array[i][j-1] == 6)){
                             this.fitness += 1;
                         }else{
                             this.fitness -= 1;
@@ -113,7 +113,7 @@ public class Individual {
 
                     //JIKA I J DI UJUNG KIRI BAWAH
                     else if(j == 0 && i == this.array[i].length-1){
-                        if(this.array[i][j+1] == 0 && this.array[i-1][j] == 0){
+                        if((this.array[i][j+1] == -5 || this.array[i][j+1] == 6 )&& (this.array[i-1][j] == 6 || this.array[i-1][j] == -5 )){
                             this.fitness += 1;
                         }else{
                             this.fitness -= 1;
@@ -122,13 +122,34 @@ public class Individual {
 
                     //JIKA I J DI UJUNG KANAN BAWAH
                     else if(j == this.array[j].length -1 && i == this.array[i].length-1){
-                        if(this.array[i-1][j] == 0 && this.array[i][j-1] == 0){
+                        if((this.array[i-1][j] == 6 || this.array[i-1][j] == -5 ) &&  (this.array[i][j-1] == -5 || this.array[i][j-1] == 6)){
                             this.fitness += 1;
                         }else{
                             this.fitness -= 1;
                         }
                     }
                 }
+
+                //JIKA KETEMU 1,
+                else if(this.array[i][j] == 1){
+                   
+                }
+
+                //JIKA KETEMU 2,
+                else if(this.array[i][j] == 2){
+
+                }
+
+                //JIKA KETEMU 3,
+                else if(this.array[i][j] == 3){
+
+                }
+
+                //JIKA KETEMU 4,
+                else if(this.array[i][j] == 4){
+
+                }
+
             }
         } 
     }

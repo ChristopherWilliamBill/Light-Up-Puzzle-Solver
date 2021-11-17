@@ -154,9 +154,21 @@ public class Individual {
                             this.array[i][j-1] = 6;
                         }
                     }
+                }
 
+                else if (this.array[i][j] == 1){
+                    
+                }
+
+                else if (this.array[i][j] == 2){
+                    
+                }
+
+                else if (this.array[i][j] == 3){
 
                 }
+
+                
                 //JIKA KETEMU 4, HARUS ADA LAMPU DI SEKITARNYA
                 else if(this.array[i][j] == 4){
                     //JIKA I DAN J BUKAN DI UJUNG

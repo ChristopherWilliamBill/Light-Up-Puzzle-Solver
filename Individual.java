@@ -157,7 +157,36 @@ public class Individual {
                 }
 
                 else if (this.array[i][j] == 1){
-                    
+                    int random = (int)(Math.random() * 3 + 0);
+                    int top = this.array[i-1][j];
+                    int bottom = this.array[i+1][j];
+                    int left = this.array[i][j-1];
+                    int right = this.array[i][j+1];
+                    if(i != 0 && i != this.array.length - 1 && j != 0 && j != this.array[i].length - 1){
+                        while(top != 5 || bottom != 5 || left != 5 || right != 5){
+                            if(random == 0){
+                                if(top != -5){
+                                    top = 6;
+                                }
+                            }
+                            else if(random == 1){
+                                if(left != -5){
+                                    left = 5;
+                                }
+                            }
+                            else if(random == 2){
+                                if(bottom != -5){
+                                    bottom = 5;
+                                }
+                            }
+                            else if(random == 3){
+                                if( right != -5){
+                                    right = 5;
+                                }
+                            }
+                            random = (int)(Math.random() * 3 + 0);
+                        }
+                    }
                 }
 
                 else if (this.array[i][j] == 2){

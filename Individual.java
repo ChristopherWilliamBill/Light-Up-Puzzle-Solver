@@ -126,7 +126,7 @@ public class Individual {
                         }
                     }
 
-                    if(arrayNBS[NBSCounter] == 2){
+                    else if(arrayNBS[NBSCounter] == 2){
                         try {
                             jawaban[i-1][j] = 6;
                         }catch (Exception e){
@@ -147,7 +147,7 @@ public class Individual {
                         }
                     }
 
-                    if(arrayNBS[NBSCounter] == 3){
+                    else if(arrayNBS[NBSCounter] == 3){
                         try {
                             jawaban[i-1][j] = 6;
                         }catch (Exception e){
@@ -168,7 +168,7 @@ public class Individual {
                         }
                     }
 
-                    if(arrayNBS[NBSCounter] == 4){
+                    else if(arrayNBS[NBSCounter] == 4){
                         try {
                             jawaban[i-1][j] = 6;
                         }catch (Exception e){
@@ -184,6 +184,210 @@ public class Individual {
                             fitness += 100;
                         }try {
                             jawaban[i][j+1] = 6;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }
+                    }
+                } else if (arraySoal[i][j] == 2){
+                    NBSCounter++;
+                    if(arrayNBS[NBSCounter] == 1){
+                        try {
+                            jawaban[i-1][j] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }
+                        try {
+                            jawaban[i+1][j] = 6;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }try {
+                            jawaban[i][j-1] = 6;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }try {
+                            jawaban[i][j+1] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }
+                    }
+                    else if(arrayNBS[NBSCounter] == 2){
+                        try {
+                            jawaban[i-1][j] = 6;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }
+                        try {
+                            jawaban[i+1][j] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }try {
+                            jawaban[i][j-1] = 6;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }try {
+                            jawaban[i][j+1] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }
+                    }
+                    else if(arrayNBS[NBSCounter] == 3){
+                        try {
+                            jawaban[i-1][j] = 6;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }
+                        try {
+                            jawaban[i+1][j] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }try {
+                            jawaban[i][j-1] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }try {
+                            jawaban[i][j+1] = 6;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }
+                    }
+                    else if(arrayNBS[NBSCounter] == 4){
+                        try {
+                            jawaban[i-1][j] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }
+                        try {
+                            jawaban[i+1][j] = 6;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }try {
+                            jawaban[i][j-1] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }try {
+                            jawaban[i][j+1] = 6;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }
+                    }
+                    else if(arrayNBS[NBSCounter] == 5){
+                        try {
+                            jawaban[i-1][j] = 6;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }
+                        try {
+                            jawaban[i+1][j] = 6;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }try {
+                            jawaban[i][j-1] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }try {
+                            jawaban[i][j+1] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }
+                    }
+                    else if(arrayNBS[NBSCounter] == 6){
+                        try {
+                            jawaban[i-1][j] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }
+                        try {
+                            jawaban[i+1][j] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }try {
+                            jawaban[i][j-1] = 6;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }try {
+                            jawaban[i][j+1] = 6;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }
+                    }
+                } else if (arraySoal[i][j] == 3){
+                    NBSCounter++;
+                    if(arrayNBS[NBSCounter] == 1){
+                        try {
+                            jawaban[i-1][j] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }
+                        try {
+                            jawaban[i+1][j] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }try {
+                            jawaban[i][j-1] = 6;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }try {
+                            jawaban[i][j+1] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }
+                    }
+                    else if(arrayNBS[NBSCounter] == 2){
+                        try {
+                            jawaban[i-1][j] = 6;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }
+                        try {
+                            jawaban[i+1][j] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }try {
+                            jawaban[i][j-1] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }try {
+                            jawaban[i][j+1] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }
+                    }
+                    else if(arrayNBS[NBSCounter] == 3){
+                        try {
+                            jawaban[i-1][j] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }
+                        try {
+                            jawaban[i+1][j] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }try {
+                            jawaban[i][j-1] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }try {
+                            jawaban[i][j+1] = 6;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }
+                    }
+                    else if(arrayNBS[NBSCounter] == 4){
+                        try {
+                            jawaban[i-1][j] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }
+                        try {
+                            jawaban[i+1][j] = 6;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }try {
+                            jawaban[i][j-1] = 5;
+                        }catch (Exception e){
+                            fitness += 100;
+                        }try {
+                            jawaban[i][j+1] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }

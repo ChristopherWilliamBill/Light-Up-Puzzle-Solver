@@ -41,13 +41,23 @@ public class Individual {
     // light bulb illuminating another light bulb
     // violation of a numbered black squares constraint
 
-    public Individual(int[] arrayNBS, int[][] arraySoal){
-        this.arraySoal = arraySoal;
+    public Individual(int[] arrayNBS, int[][] arrayS){
+        this.arraySoal = arrayS;
+        this.arrayJawaban = new int[arrayS.length][arrayS.length];
+
+        for(int i = 0; i < arraySoal.length; i++){
+            for(int j = 0; j < arraySoal.length; j++){
+                this.arrayJawaban[i][j] = arraySoal[i][j];
+            }
+        }
+
         this.arrayNBS = arrayNBS;
         this.fitness = 0;
-        this.arrayJawaban = this.placeLamp();
+        this.placeLamp();
         this.checkTembok();
         this.checkLightingOtherLamp();
+        //this.printArraySoal();
+
     }
 
     public int getFitness(){
@@ -57,7 +67,6 @@ public class Individual {
     public void printNBS(){
         for(int i = 0; i < arrayNBS.length; i++){
             System.out.print(arrayNBS[i] + " ");
-            System.out.println();
         }
     }
 
@@ -67,9 +76,25 @@ public class Individual {
         for(int i = 0; i < length; i++){
             for(int j = 0; j < length; j++){
                 if(arrayJawaban[i][j] < 0){
-                    System.out.print(arrayJawaban[i][j] + "  ");
+                    System.out.print(this.arrayJawaban[i][j] + "  ");
                 }else{
-                    System.out.print(" " + arrayJawaban[i][j] + "  ");
+                    System.out.print(" " + this.arrayJawaban[i][j] + "  ");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+
+    public void printArraySoal(){
+        int length = this.arraySoal.length;
+
+        for(int i = 0; i < length; i++){
+            for(int j = 0; j < length; j++){
+                if(arraySoal[i][j] < 0){
+                    System.out.print(this.arraySoal[i][j] + "  ");
+                }else{
+                    System.out.print(" " + this.arraySoal[i][j] + "  ");
                 }
             }
             System.out.println();
@@ -171,9 +196,8 @@ public class Individual {
     }
 
 
-    private int[][] placeLamp(){
+    private void placeLamp(){
         int length = this.arraySoal.length;
-        int[][] jawaban = this.arraySoal;
         int NBSCounter = 0;
 
         for(int i = 0; i < length; i++){
@@ -182,22 +206,22 @@ public class Individual {
                     NBSCounter++;
                 }else if(arraySoal[i][j] == 4){
                     try {
-                        jawaban[i][j+1] = 5;
+                        this.arrayJawaban[i][j+1] = 5;
                     }catch (Exception e){
                         fitness += 100;
                     }
                     try {
-                        jawaban[i][j-1] = 5;
+                        this.arrayJawaban[i][j-1] = 5;
                     }catch (Exception e){
                         fitness += 100;
                     }
                     try {
-                        jawaban[i+1][j] = 5;
+                        this.arrayJawaban[i+1][j] = 5;
                     }catch (Exception e){
                         fitness += 100;
                     }
                     try {
-                        jawaban[i-1][j] = 5;
+                        this.arrayJawaban[i-1][j] = 5;
                     }catch (Exception e){
                         fitness += 100;
                     }
@@ -205,28 +229,28 @@ public class Individual {
                 }else if(arraySoal[i][j] == 1){
                     if(arrayNBS[NBSCounter] == 1){
                         try {
-                            jawaban[i-1][j] = 5;
+                            this.arrayJawaban[i-1][j] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
                     }
                     else if(arrayNBS[NBSCounter] == 2){
                         try {
-                            jawaban[i][j+1] = 5;
+                            this.arrayJawaban[i][j+1] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
                     }
                     else if(arrayNBS[NBSCounter] == 3){
                         try {
-                            jawaban[i+1][j] = 5;
+                            this.arrayJawaban[i+1][j] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
                     }
                     else if(arrayNBS[NBSCounter] == 4){
                         try {
-                            jawaban[i][j-1] = 5;
+                            this.arrayJawaban[i][j-1] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
@@ -235,36 +259,36 @@ public class Individual {
                 } else if (arraySoal[i][j] == 2){
                     if(arrayNBS[NBSCounter] == 1){
                         try {
-                            jawaban[i-1][j] = 5;
+                            this.arrayJawaban[i-1][j] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
                         try {
-                            jawaban[i][j+1] = 5;
+                            this.arrayJawaban[i][j+1] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
                     }
                     else if(arrayNBS[NBSCounter] == 2){
                         try {
-                            jawaban[i+1][j] = 5;
+                            this.arrayJawaban[i+1][j] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
                         try {
-                            jawaban[i][j+1] = 5;
+                            this.arrayJawaban[i][j+1] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
                     }
                     else if(arrayNBS[NBSCounter] == 3){
                         try {
-                            jawaban[i+1][j] = 5;
+                            this.arrayJawaban[i+1][j] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
                         try {
-                            jawaban[i][j-1] = 5;
+                            this.arrayJawaban[i][j-1] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
@@ -272,36 +296,36 @@ public class Individual {
                     }
                     else if(arrayNBS[NBSCounter] == 4){
                         try {
-                            jawaban[i-1][j] = 5;
+                            this.arrayJawaban[i-1][j] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
                         try {
-                            jawaban[i][j-1] = 5;
+                            this.arrayJawaban[i][j-1] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
                     }
                     else if(arrayNBS[NBSCounter] == 5){
                         try {
-                            jawaban[i][j-1] = 5;
+                            this.arrayJawaban[i][j-1] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
                         try {
-                            jawaban[i][j+1] = 5;
+                            this.arrayJawaban[i][j+1] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
                     }
                     else if(arrayNBS[NBSCounter] == 6){
                         try {
-                            jawaban[i-1][j] = 5;
+                            this.arrayJawaban[i-1][j] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
                         try {
-                            jawaban[i+1][j] = 5;
+                            this.arrayJawaban[i+1][j] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
@@ -311,64 +335,64 @@ public class Individual {
                 } else if (arraySoal[i][j] == 3){
                     if(arrayNBS[NBSCounter] == 1){
                         try {
-                            jawaban[i-1][j] = 5;
+                            this.arrayJawaban[i-1][j] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
                         try {
-                            jawaban[i+1][j] = 5;
+                            this.arrayJawaban[i+1][j] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
                         try {
-                            jawaban[i][j+1] = 5;
+                            this.arrayJawaban[i][j+1] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
                     }
                     else if(arrayNBS[NBSCounter] == 2){
                         try {
-                            jawaban[i+1][j] = 5;
+                            this.arrayJawaban[i+1][j] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }try {
-                            jawaban[i][j-1] = 5;
+                            this.arrayJawaban[i][j-1] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }try {
-                            jawaban[i][j+1] = 5;
+                            this.arrayJawaban[i][j+1] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
                     }
                     else if(arrayNBS[NBSCounter] == 3){
                         try {
-                            jawaban[i-1][j] = 5;
+                            this.arrayJawaban[i-1][j] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
                         try {
-                            jawaban[i+1][j] = 5;
+                            this.arrayJawaban[i+1][j] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }try {
-                            jawaban[i][j-1] = 5;
+                            this.arrayJawaban[i][j-1] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
                     }
                     else if(arrayNBS[NBSCounter] == 4){
                         try {
-                            jawaban[i-1][j] = 5;
+                            this.arrayJawaban[i-1][j] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
                         try {
-                            jawaban[i][j-1] = 5;
+                            this.arrayJawaban[i][j-1] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }try {
-                            jawaban[i][j+1] = 5;
+                            this.arrayJawaban[i][j+1] = 5;
                         }catch (Exception e){
                             fitness += 100;
                         }
@@ -377,7 +401,5 @@ public class Individual {
                 }
             }
         }
-
-        return jawaban;
     }
 }

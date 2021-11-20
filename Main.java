@@ -63,11 +63,11 @@ public class Main{
     }
     public static void main(String[] args) throws IOException {
 
-        long seed = 1;
+        long seed = 1234566;
 
         Random random = new Random(seed);
 
-        int soal[][] = importFile("ArraySoal.txt");
+        int[][] soal = importFile("ArraySoal.txt");
 
         int NumberOfBlackSquares = 0;
 
@@ -81,11 +81,8 @@ public class Main{
                 }
             }
         }
-
-
-        //NBS yg bener: 21133321
         
-        for(int i = 0; i < 30; i++){
+        for(int i = 0; i < 100; i++){
             int[] NBS = new int[NumberOfBlackSquares];
             for(int j = 0; j < NumberOfBlackSquares; j++){
                 int temp = linkedList.get(j);
@@ -97,13 +94,18 @@ public class Main{
                     NBS[j] = random.nextInt(7 - 1) + 1;
                 }
             }
-
+            
             Individual individual = new Individual(NBS, soal);
-            System.out.println(individual.getFitness());
+            System.out.println(individual.getFitness()); 
+            if(individual.getFitness() == 0){
+                individual.printNBS();
+            }
         }
 
+        System.out.println();
+        //NBS yg bener: 21133321
         int[] NBSBener = {2,1,1,3,3,3,2,1};
         Individual individualB = new Individual(NBSBener, soal);
-        System.out.println("fitness bener: " + individualB.getFitness());
+        System.out.println("Fitness bener: " + individualB.getFitness());
     }
 }

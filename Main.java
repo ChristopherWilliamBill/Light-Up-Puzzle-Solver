@@ -63,7 +63,7 @@ public class Main{
     }
     public static void main(String[] args) throws IOException {
 
-        long seed = 23823940;
+        long seed = 874294223;
 
         Random random = new Random(seed);
 
@@ -82,7 +82,13 @@ public class Main{
             }
         }
 
-        for(int i = 0; i < 20; i++){
+
+        //NBS yg bener: 21133321
+        int[] NBSBener = {2,1,1,3,3,3,2,1};
+        Individual individualB = new Individual(NBSBener, soal);
+        System.out.println(individualB.getFitness());
+        
+        for(int i = 0; i < 100; i++){
             int[] NBS = new int[NumberOfBlackSquares];
             for(int j = 0; j < NumberOfBlackSquares; j++){
                 int temp = linkedList.get(j);
@@ -94,31 +100,9 @@ public class Main{
                     NBS[j] = random.nextInt(7 - 1) + 1;
                 }
             }
-            Individual individual = new Individual(NBS, soal, random);
+
+            Individual individual = new Individual(NBS, soal);
             System.out.println(individual.getFitness());
-            if(individual.getFitness() == 0){
-                System.out.println("ARRAY NBS: ");
-                individual.printNBS();
-            }
         }
-
-        //NBS yg bener: 2xx3332x
-        //x = 1
-
-        // int[] temp = new int[NumberOfBlackSquares];
-        // temp[0] = 2;
-        // temp[1] = 1;
-        // temp[2] = 1;
-        // temp[3] = 3;
-        // temp[4] = 3;
-        // temp[5] = 3;
-        // temp[6] = 2;
-        // temp[7] = 1;
-
-        // Individual individual = new Individual(temp, soal, random);
-        // System.out.println(individual.getFitness());
-
-
-
     }
 }

@@ -1,12 +1,10 @@
 import java.util.Random;
-import java.io.*;
 
 public class Individual {
     private int[] arrayNBS;
     private int[][] arraySoal;
+    private int[][] arrayJawaban;
     private int fitness;
-    private Random random;
-
     /*
 
     BENTUK ARRAY SOAL:
@@ -38,12 +36,18 @@ public class Individual {
          6 : tidak ada lampu   
     */
 
-    public Individual(int[] arrayNBS, int[][] arraySoal, Random random){
-        this.random = random;
+
+    // YANG HARUS DICEK:
+    // light bulb illuminating another light bulb
+    // violation of a numbered black squares constraint
+
+    public Individual(int[] arrayNBS, int[][] arraySoal){
         this.arraySoal = arraySoal;
         this.arrayNBS = arrayNBS;
         this.fitness = 0;
-        this.generateArrayJawaban();
+        this.arrayJawaban = this.placeLamp();
+        this.checkTembok();
+        this.checkLightingOtherLamp();
     }
 
     public int getFitness(){
@@ -57,10 +61,119 @@ public class Individual {
         }
     }
 
-
-    private int[][] generateArrayJawaban(){
+    public void printArrayJawaban(){
         int length = this.arraySoal.length;
-        int[][] jawaban = new int[length][length];
+
+        for(int i = 0; i < length; i++){
+            for(int j = 0; j < length; j++){
+                if(arrayJawaban[i][j] < 0){
+                    System.out.print(arrayJawaban[i][j] + "  ");
+                }else{
+                    System.out.print(" " + arrayJawaban[i][j] + "  ");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    private void checkLightingOtherLamp(){
+        int length = this.arraySoal.length;
+
+        for(int i = 0; i < length; i++){
+            for(int j = 0; j < length; j++){
+                if(arrayJawaban[i][j] == 5){
+                    int currentColumn = j;
+                    int currentRow = i;
+
+                    while(currentRow < length -1){
+                        if(arrayJawaban[currentRow+1][j] == 0 || arrayJawaban[currentRow+1][j] == 1 || arrayJawaban[currentRow+1][j] == 2 || arrayJawaban[currentRow+1][j] == 3 || arrayJawaban[currentRow+1][j] == 4){
+                            break;
+                        }
+                        if(arrayJawaban[currentRow+1][j] == -5){
+                            break;
+                        }
+                        if(arrayJawaban[currentRow+1][j] == 5){
+                            this.fitness += 100;
+                            break;
+                        }
+                        arrayJawaban[currentRow+1][j] = -2;
+                        currentRow++;
+                    }
+
+                    currentColumn = j;
+                    currentRow = i;
+    
+                    while(currentRow != 0){
+                        if(arrayJawaban[currentRow-1][j] == 0 || arrayJawaban[currentRow-1][j] == 1 || arrayJawaban[currentRow-1][j] == 2 || arrayJawaban[currentRow-1][j] == 3 || arrayJawaban[currentRow-1][j] == 4){
+                            break;
+                        }
+                        if(arrayJawaban[currentRow-1][j] == -5){
+                            break;
+                        }
+                        if(arrayJawaban[currentRow-1][j] == 5){
+                            this.fitness += 100;
+                            break;
+                        }
+                        arrayJawaban[currentRow-1][j] = -2;
+                        currentRow--;
+                    }
+
+                    currentColumn = j;
+                    currentRow = i;
+
+                    while(currentColumn < length - 1){
+                        if(arrayJawaban[i][currentColumn + 1] == 0 || arrayJawaban[i][currentColumn + 1] == 1 || arrayJawaban[i][currentColumn + 1] == 2 || arrayJawaban[i][currentColumn + 1] == 3 || arrayJawaban[i][currentColumn + 1] == 4){
+                            break;
+                        }
+                        if(arrayJawaban[i][currentColumn + 1] == -5){
+                            break;
+                        }
+                        if(arrayJawaban[i][currentColumn + 1] == 5){
+                            this.fitness += 100;
+                            break;
+                        }
+                        arrayJawaban[i][currentColumn+1] = -2;
+                        currentColumn++;
+                    }
+
+                    currentColumn = j;
+                    currentRow = i;
+
+                    while(currentColumn != 0){
+                        if(arrayJawaban[i][currentColumn - 1] == 0 || arrayJawaban[i][currentColumn - 1] == 1 || arrayJawaban[i][currentColumn - 1] == 2 || arrayJawaban[i][currentColumn - 1] == 3 || arrayJawaban[i][currentColumn - 1] == 4){
+                            break;
+                        }
+                        if(arrayJawaban[i][currentColumn - 1] == -5){
+                            break;
+                        }
+                        if(arrayJawaban[i][currentColumn - 1] == 5){
+                            this.fitness += 100;
+                            break;
+                        }
+                        arrayJawaban[i][currentColumn - 1] = -2;
+                        currentColumn--;
+                    }
+                }
+            }
+        }
+    }
+
+    private void checkTembok(){
+        int length = this.arraySoal.length;
+
+        for(int i = 0; i < length; i++){
+            for(int j = 0; j < length; j++){
+                if(arrayJawaban[i][j] == 5 && arraySoal[i][j] == -5){
+                    this.fitness += 100;
+                }
+            }
+        }
+    }
+
+
+    private int[][] placeLamp(){
+        int length = this.arraySoal.length;
+        int[][] jawaban = this.arraySoal;
         int NBSCounter = 0;
 
         for(int i = 0; i < length; i++){

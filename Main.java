@@ -67,7 +67,7 @@ public class Main{
 
         Random random = new Random(seed);
 
-        int[][] soal = importFile("ArraySoal.txt");
+        int[][] soal = importFile("Test/ArraySoal.txt");
 
         int NumberOfBlackSquares = 0;
 

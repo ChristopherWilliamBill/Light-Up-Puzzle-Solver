@@ -76,4 +76,5 @@ KOMBINASI UNTUK 3
 
 
 
-
+5 = ada lampu
+6 = tidak ada lampu

@@ -4,7 +4,30 @@ import java.util.LinkedList;
 
 public class Main{
 
-    //method untuk mengimport soal dari file.txt
+    /*
+
+    CONTOH BENTUK ARRAY SOAL:
+    -1  -5  -1  -1   3   -1  -1
+    -1   0  -1  -1  -1   -5   0
+     1  -1  -1  -1  -1   -1  -1
+    -1  -1  -1  -5  -1   -1  -1
+    -1  -1  -1  -1  -1   -1   1
+     1  -5  -1  -1  -1   -5  -1
+    -1  -1   1  -1  -1    0  -1
+
+    KETERANGAN
+    0 1 2 3 4 : jumlah lampu yang ada di sekitar array[i][j] tersebut
+    -1 : tidak ada lampu
+    -5 : tembok
+     5 : ada lampu
+
+    Lampu akan ditempatkan pada kotak dengan nilai -1 (kotak yang belum ada lampu), 
+    sehingga nilai kotak tersebut menjadi 5 (ada lampu).
+    Kotak lainnya (selain tembok dan kotak 0 1 2 3 4) yang disinari oleh lampu, nilainya menjadi -2.
+
+    */
+
+    //Method untuk mengimport soal dari file.txt
     public static int[][] importFile(String fileName) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(fileName));
         int[][] numArray;
@@ -16,7 +39,6 @@ public class Main{
         try {
             int rows = Integer.parseInt(dimensions[0]);
             int cols = Integer.parseInt(dimensions[1]);
-            // TODO: check for negative values.
             numArray = new int[rows][cols];
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("First line of file has to be 'rows cols'");
@@ -61,23 +83,29 @@ public class Main{
         } catch (IOException e) { }
         return numArray;
     }
+
     public static void main(String[] args) throws IOException {
 
+        //Seed yang digunakan untuk object random di seluruh algoritma
         long seed = 1281201;
-
         Random random = new Random(seed);
 
+        //mengimport array soal
         int[][] soal = importFile("Test/ArraySoal.txt");
 
+        //inisialisi variabel NumberOfBlackSquares (NBS) untuk menghitung banyaknya kotak  0 1 2 3 4 yang menjadi soal/clue penempatan lampu
         int NumberOfBlackSquares = 0;
 
+        //linked list digunakan untuk menyimpan nilai setiap kotak NBS
         LinkedList<Integer> linkedList = new LinkedList<Integer>();
 
+        //iterasi seluruh soal
         for(int i = 0; i < soal.length; i++){
             for(int j = 0; j < soal[i].length; j++){
+                //jika ada kotak selain -1, artinya kotak tersebut adalah kotak NBS
                 if(soal[i][j] > -1){
-                    NumberOfBlackSquares++;
-                    linkedList.add(soal[i][j]);
+                    NumberOfBlackSquares++; //maka banyaknya NBS bertambah
+                    linkedList.add(soal[i][j]); //dan catat nilai kotak tersebut di linkedlist
                 }
             }
         }

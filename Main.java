@@ -110,21 +110,31 @@ public class Main{
             }
         }
         
+        //melakukan iterasi sebanyak 200 fitness evaluation
         for(int i = 0; i < 200; i++){
+            //menginisialisasi array NumberedBlackSquares
             int[] NBS = new int[NumberOfBlackSquares];
             for(int j = 0; j < NumberOfBlackSquares; j++){
+                //mengisi variabel temp dengan nilai linkedlist berisi numbered square
                 int temp = linkedList.get(j);
+                //jika nilai temp 0 atau 4, maka hanya ada kemungkinan 1 kombinasi penempatan lampu
                 if(temp == 0 || temp == 4){
                     NBS[j] = 1;
-                }else if(temp == 1 || temp == 3){
+                }
+                //jika nilai temp 1 atau 3, ada 4 kemungkinan kombinasi penempatan lampu
+                else if(temp == 1 || temp == 3){
                     NBS[j] = random.nextInt(5 - 1) + 1;
+                //jika nilai temp 2, ada 6 kemungkinan kombinasi penempatan lampu
                 }else if(temp == 2){
                     NBS[j] = random.nextInt(7 - 1) + 1;
                 }
             }
-            
+
+            //membuat objek individual baru dengan array NumberedBlackSquare dan array2d soal yang didapat dari file txt
             Individual individual = new Individual(NBS, soal);
+            //mengoutput nilai fitness untuk objek individual yang telah dibuat
             System.out.println(individual.getFitness()); 
+            //jika fitness value dari individual tersebut adalah 0, maka print array kombinasi numberedblacksquare yang menghasilkan nilai 0 tersebut
             if(individual.getFitness() == 0){
                 individual.printNBS();
             }

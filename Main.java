@@ -63,7 +63,7 @@ public class Main{
     }
     public static void main(String[] args) throws IOException {
 
-        long seed = 1234566;
+        long seed = 1281201;
 
         Random random = new Random(seed);
 
@@ -82,7 +82,7 @@ public class Main{
             }
         }
         
-        for(int i = 0; i < 100; i++){
+        for(int i = 0; i < 200; i++){
             int[] NBS = new int[NumberOfBlackSquares];
             for(int j = 0; j < NumberOfBlackSquares; j++){
                 int temp = linkedList.get(j);

@@ -1,7 +1,13 @@
+import java.util.LinkedList;
+import java.util.Random;
+
 public class Individual {
     private int[] arrayNBS; //berisi bilangan-bilangan kombinasi penempatan lampu untuk setiap NBS
     private int[][] arraySoal; 
     private int[][] arrayJawaban;
+    private double parentProbability;
+    private LinkedList<Integer> NBS;
+    private Random random;
 
     //fitness terbaik adalah 0
     //jika semua lampu dari hasil random arrayNBS ditempati, dan terjadi error, maka fitness akan bertambah.
@@ -16,9 +22,11 @@ public class Individual {
     // ada 4 lampu di sekitar kotak 2 -> fitness + 2
     // ada 1 lampu di sekitar kotak 3 -> fitness + 2
 
-    public Individual(int[] arrayNBS, int[][] arrayS){
+    public Individual(int[] arrayNBS, int[][] arrayS, LinkedList<Integer> linkedList, Random r){
         this.arraySoal = arrayS;
         this.arrayJawaban = new int[arrayS.length][arrayS.length];
+        this.parentProbability = 0;
+        this.random = r;
 
         //arrayJawaban pada awalnya sama dengan arraySoal
         for(int i = 0; i < arraySoal.length; i++){
@@ -30,9 +38,43 @@ public class Individual {
         this.arrayNBS = arrayNBS;
         this.fitness = 0; //fitness awalnya 0
 
+        this.NBS = linkedList;
+
         //method untuk mendapatkan fitness setiap individu
-        this.setFitness();
-        
+        this.setFitness();  
+    }
+
+    public void setParentProbability(double p){
+        this.parentProbability = p;
+    }
+
+    public double getParentProbability(){
+        return this.parentProbability;
+    }
+
+    public Individual doCrossover(Individual other){
+        int NBSlength = this.arrayNBS.length;
+        int[] newNBS = new int[NBSlength];
+
+        for(int i = 0; i < NBSlength / 2; i++){
+            newNBS[i] = this.arrayNBS[i];
+        }
+
+        for(int i = (int) Math.ceil(NBSlength/2); i < NBSlength; i++){
+            newNBS[i] = other.arrayNBS[i];
+        }
+
+        Individual child = new Individual(newNBS, this.arraySoal, this.NBS, this.random);
+
+        return child;
+    }
+
+    public void doMutation(){
+        for(int i = 0; i < NBS.size(); i++){
+            if(this.NBS.get(i) == 3 || this.NBS.get(i) == 1){
+                this.arrayNBS[i] = this.random.nextInt(5 - 1) + 1;
+            }
+        }
     }
 
     private void setFitness(){

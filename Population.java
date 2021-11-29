@@ -20,7 +20,7 @@ public class Population {
 
         //mengimport array soal
         try {
-            this.soal = importFile("Test/10x10_hard");
+            this.soal = importFile("Test/7x7_easy");
         } catch (IOException e) {
             e.printStackTrace();
         }

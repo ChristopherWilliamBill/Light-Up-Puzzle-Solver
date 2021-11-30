@@ -10,6 +10,7 @@ public class PopulationStepTwo{
     private int populationSize = 0;
     private int[][] jawaban;
     private int NumberOfNoLamps;
+    private LinkedList<Integer> linkedList;
 
     public PopulationStepTwo(Random random, int maxPopulationSize,int [][] jawaban) {
         this.populationsteptwo = new ArrayList<IndividualStepTwo>();
@@ -17,28 +18,38 @@ public class PopulationStepTwo{
         this.maxPopulationSize = maxPopulationSize;
         //inisialisi variabel NumberOfBlackSquares (NBS) untuk menghitung banyaknya kotak  0 1 2 3 4 yang menjadi soal/clue penempatan lampu
         this.NumberOfNoLamps = 0;
-        
-        
+        this.linkedList = new LinkedList<Integer>();
+        this.jawaban = jawaban;
         //iterasi seluruh soal
         for(int i = 0; i < jawaban.length; i++){
             for(int j = 0; j < jawaban[i].length; j++){
                 //jika ada kotak selain -1, artinya kotak tersebut adalah kotak NBS
                 if(jawaban[i][j] == -1){
                     NumberOfNoLamps++; //maka banyaknya NBS bertambah
+                    linkedList.add(jawaban[i][j]);
                 }
             }
         }
+    }
+
+    public boolean addIndividual(IndividualStepTwo newInd) {
+        if (this.populationSize >= this.maxPopulationSize){
+            return false;
+        } 
+        this.populationsteptwo.add(newInd);
+        this.populationSize++;
+        return true;
     }
 
     public void generateRandomPopulation() {
         for (int i = 0; i < this.maxPopulationSize; i++) {
             int[] NL = new int[this.NumberOfNoLamps];
             for(int j = 0; j < this.NumberOfNoLamps; j++){
-                    NL[j] = this.random.nextInt(3 - 1) + 1;
+                    NL[j] = this.random.nextInt(2) ;
             }
 
             //membuat objek individual baru dengan array NumberedBlackSquare dan array2d soal yang didapat dari file txt
-            IndividualStepTwo individualsteptwo = new IndividualStepTwo(NL, this.jawaban, this.random);
+            IndividualStepTwo individualsteptwo = new IndividualStepTwo(NL, this.jawaban, this.linkedList,this.random);
             this.addIndividualStepTwo(individualsteptwo);
         }
     }
@@ -52,8 +63,8 @@ public class PopulationStepTwo{
         return true;
     }
 
-    public Individual[] selectParent() {    //roulette wheel
-        Individual[] parents = new Individual[2];
+    public IndividualStepTwo[] selectParent() {    //roulette wheel
+        IndividualStepTwo[] parents = new IndividualStepTwo[2];
 
         int sumfitness = 0;
         for (int i = 0; i < this.populationsteptwo.size(); i++) {
@@ -61,7 +72,7 @@ public class PopulationStepTwo{
         }
 
         for (int i = 0; i < this.populationsteptwo.size(); i++) {
-            ((Individual) this.populationsteptwo.get(i)).setParentProbability(1.0 * this.populationsteptwo.get(i).getFitness() / sumfitness);
+            ((IndividualStepTwo) this.populationsteptwo.get(i)).setParentProbability(1.0 * this.populationsteptwo.get(i).getFitness() / sumfitness);
         }
         for (int n = 0; n < 2; n++) {
             int i = -1;
@@ -76,7 +87,7 @@ public class PopulationStepTwo{
         return parents;
     }
 
-    public Individual getBestIndividual(){
+    public IndividualStepTwo getBestIndividual(){
         int best = Integer.MAX_VALUE;
         int index = 0;
         int bestIndex = 0;
@@ -92,9 +103,9 @@ public class PopulationStepTwo{
         return this.populationsteptwo.get(bestIndex);
     }
 
-    public Population generateNewPopulationWithElitism(){
-        Population newPopulation = new Population(this.random, this.maxPopulationSize);
-        newPopulation.addIndividual(this.getBestIndividual());
+    public PopulationStepTwo generateNewPopulationWithElitism(){
+        PopulationStepTwo newPopulation = new PopulationStepTwo(this.random, this.maxPopulationSize,this.jawaban);
+        newPopulation.addIndividualStepTwo(this.getBestIndividual());
 
         return newPopulation;
     }

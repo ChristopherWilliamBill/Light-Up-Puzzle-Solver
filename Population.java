@@ -20,7 +20,7 @@ public class Population {
 
         //mengimport array soal
         try {
-            this.soal = importFile("Test/7x7_easy");
+            this.soal = importFile("Test/10x10_hard");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -111,12 +111,16 @@ public class Population {
             if(this.population.get(index).getFitness() < best){
                 best = this.population.get(index).getFitness();
                 bestIndex = index;
+
             }
             index++;
         }
 
+        
+
         return this.population.get(bestIndex);
     }
+
 
     public Population generateNewPopulationWithElitism(){
         Population newPopulation = new Population(this.random, this.maxPopulationSize);

@@ -87,14 +87,24 @@ public class Main{
     public static void main(String[] args) throws IOException {
 
         //Seed yang digunakan untuk object random di seluruh algoritma
-        long seed = 1234120;
+        int seed = 1234120;
         Random random = new Random(seed);
 
-        LightUp lightUp = new LightUp(random, 10, 0.85, 0.75);
+        LightUp lightUp = new LightUp(random, 1000, 0.85, 0.75);
         Individual best = lightUp.run();
-
-        System.out.println(best.getFitness());
+        LightUpStepTwo lightUpTwo = new LightUpStepTwo(random, 1000, 0.85,0.75,best.getArrayJawaban());
+        IndividualStepTwo bestTwo = lightUpTwo.run();
+        System.out.println("Step One :");
+        System.out.println("Fitness Value : " + best.getFitness());
         best.printArrayJawaban();
+        System.out.println("=============");
+        System.out.println("Step Two :" );
+        System.out.println("Fitness Value : " + bestTwo.getFitness());
+        bestTwo.printarrayJawaban();
+
+
+        // System.out.println(best.getFitness());
+        // best.printArrayJawaban();
 
         // System.out.println();
         // //NBS yg bener: 21133321

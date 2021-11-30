@@ -74,6 +74,12 @@ public class Individual {
             if(this.NBS.get(i) == 3 || this.NBS.get(i) == 1){
                 this.arrayNBS[i] = this.random.nextInt(5 - 1) + 1;
             }
+            else if (this.NBS.get(i) == 2){
+                this.arrayNBS[i] = this.random.nextInt(7 - 1) + 1;
+            }
+            else if(this.NBS.get(i) == 0 || this.NBS.get(i) == 4){
+                this.arrayNBS[i] = 1;
+            }
         }
     }
 
@@ -112,6 +118,10 @@ public class Individual {
         }
     }
 
+    public int [][] getArrayJawaban(){
+        return this.arrayJawaban;
+    }
+ 
     public void printArraySoal(){
         int length = this.arraySoal.length;
         for(int i = 0; i < length; i++){

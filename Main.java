@@ -31,7 +31,7 @@ public class Main{
 
     */
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException,FileNotFoundException {
 
         //Seed yang digunakan untuk object random di seluruh algoritma
         int seed = 1234120;
@@ -43,13 +43,15 @@ public class Main{
         LightUpStepTwo lightUpTwo = new LightUpStepTwo(random, 100, 0.85,0.75,best.getArrayJawaban(),0.5); //membuat objek LightUpStepTwo untuk memecahkan tahap 2
         IndividualStepTwo bestTwo = lightUpTwo.run(); //mendapatkan individu terbaik dari tahap 2 (puzzle selesai).
 
-        //Menampilkan hasilnya, yaitu fitness yang didapatkan, dan array hasilnya.
-        System.out.println("Step One :");
-        System.out.println("Fitness Value : " + best.getFitness());
-        best.printArrayJawaban();
-        System.out.println("======================================");
-        System.out.println("Step Two :" );
-        System.out.println("Fitness Value : " + bestTwo.getFitness());
-        bestTwo.printarrayJawaban();
+        PrintWriter outputFile = new PrintWriter("Result.txt"); // membuat objek printwriter
+        //inisialiasi variabel string
+        String string = " ";
+        //memasukkan nilai string 
+        string = "Step One : " +"\n" + "Fitness Value : " + best.getFitness() + "\n" + best.getArrayJawabanAsString() + "\n" + "================================" + "\n" + 
+        "Step Two : " + "\n" +"Fitness Value : "+ bestTwo.getFitness() + "\n" + bestTwo.getArrayJawabanAsString() + "\n" ;
+        //memasukkan isi variabel string ke outputfile
+        outputFile.println(string);
+        //menutup outputfile
+        outputFile.close();
     }
 }

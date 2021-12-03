@@ -122,21 +122,26 @@ public class Individual {
         System.out.println();
     }
 
-    //printNBS, printArrayJawaban, printArraySoal hanya untuk menampilkan isi masing-masing array
+    //printNBS,printArraySoal hanya untuk menampilkan isi masing-masing array
     //semuanya dilakukan dengan memprint satu-persatu elemen array dari awal array hingga akhir array
     //terdapat if dan else hanya untuk menambah spasi untuk merapikan hasil print
-    public void printArrayJawaban(){
+
+    //fungsi yang mengembalikan array jawaban dalam bentuk string
+    public String getArrayJawabanAsString(){
+        //inisialiasi nilai string
+        String string = "";
         int length = this.arraySoal.length;
         for(int i = 0; i < length; i++){
             for(int j = 0; j < length; j++){
-                if(arrayJawaban[i][j] < 0){
-                    System.out.print(this.arrayJawaban[i][j] + "  ");
+                if( i == 0){
+                    string = Integer.toString(this.arrayJawaban[i][j]) + " " ;
                 }else{
-                    System.out.print(" " + this.arrayJawaban[i][j] + "  ");
+                    string = string + Integer.toString(this.arrayJawaban[i][j]) + " " ;
                 }
             }
-            System.out.println();
+            string = string + "\n";
         }
+        return string;
     }
 
     public int [][] getArrayJawaban(){

@@ -103,18 +103,22 @@ public class IndividualStepTwo {
         }
     }
 
-    public void printarrayJawaban(){
+    //fungsi yang mengembalikan array jawaban dalam bentuk string
+    public String getArrayJawabanAsString(){
+        //inisialiasi nilai string
+        String string = "";
         int length = this.arraySoal.length;
         for(int i = 0; i < length; i++){
             for(int j = 0; j < length; j++){
-                if(arrayJawaban2[i][j] < 0){
-                    System.out.print(this.arrayJawaban2[i][j] + "  ");
+                if( i == 0){
+                    string = Integer.toString(this.arrayJawaban2[i][j]) + " " ;
                 }else{
-                    System.out.print(" " + this.arrayJawaban2[i][j] + "  ");
+                    string = string + Integer.toString(this.arrayJawaban2[i][j]) + " " ;
                 }
             }
-            System.out.println();
+            string = string + "\n";
         }
+        return string;
     }
 
     private void placeLamp(){

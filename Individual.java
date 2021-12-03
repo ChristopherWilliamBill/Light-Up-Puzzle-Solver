@@ -3,11 +3,11 @@ import java.util.Random;
 
 public class Individual {
     private int[] arrayNBS; //berisi bilangan-bilangan kombinasi penempatan lampu untuk setiap NBS
-    private int[][] arraySoal; 
-    private int[][] arrayJawaban;
-    private double parentProbability;
-    private LinkedList<Integer> NBS;
-    private Random random;
+    private int[][] arraySoal; //soal
+    private int[][] arrayJawaban; //jawaban
+    private double parentProbability; //kemungkinan individu dipilih menjadi parent
+    private LinkedList<Integer> NBS; //berisi nilai-nilai kotak clue (0 1 2 3 4)
+    private Random random; //objek random
 
     //fitness terbaik adalah 0
     //jika semua lampu dari hasil random arrayNBS ditempati, dan terjadi error, maka fitness akan bertambah.
@@ -22,10 +22,11 @@ public class Individual {
     // ada 4 lampu di sekitar kotak 2 -> fitness + 2
     // ada 1 lampu di sekitar kotak 3 -> fitness + 2
 
+    //Constructor
     public Individual(int[] arrayNBS, int[][] arrayS, LinkedList<Integer> linkedList, Random r){
         this.arraySoal = arrayS;
-        this.arrayJawaban = new int[arrayS.length][arrayS.length];
-        this.parentProbability = 0;
+        this.arrayJawaban = new int[arrayS.length][arrayS.length]; //array jawaban panjangnya sama dengan array soal
+        this.parentProbability = 0; //kemungkinan menjadi parent awalnya 0, dan diubah ketika sudah mendapat fitness individu dan fitness populasi
         this.random = r;
 
         //arrayJawaban pada awalnya sama dengan arraySoal
@@ -38,51 +39,68 @@ public class Individual {
         this.arrayNBS = arrayNBS;
         this.fitness = 0; //fitness awalnya 0
 
+        //berisi nilai clue NBS (0 1 2 3 4)
         this.NBS = linkedList;
 
         //method untuk mendapatkan fitness setiap individu
         this.setFitness();  
     }
 
+    //method untuk mengubah nilai parentProbability ketika sudah mendapat fitness individu dan fitness populasi
     public void setParentProbability(double p){
         this.parentProbability = p;
     }
 
+    //mereturn parent probability
     public double getParentProbability(){
         return this.parentProbability;
     }
 
+    //method untuk melakukan crossover
+    //crossover dilakukan dengan membagi array NBS parent menjadi 2
+    //kemudian 1/2 dari NBS parent 1, dan 1/2 dari NBS parent 2 digabung untuk menjadi 1 child baru
     public Individual doCrossover(Individual other){
-        int NBSlength = this.arrayNBS.length;
-        int[] newNBS = new int[NBSlength];
+        int NBSlength = this.arrayNBS.length; //mendapatkan panjang
+        int[] newNBS = new int[NBSlength]; //NBS baru untuk child
 
+        //1/2 dari NBS parent 1 menjadi 1/2 dari newNBS dari 0 sampai tengah
         for(int i = 0; i < NBSlength / 2; i++){
             newNBS[i] = this.arrayNBS[i];
         }
 
+        //1/2 dari NBS parent 2 menjadi 1/2 dari newNBS dari tengah sampai akhir
         for(int i = (int) Math.ceil(NBSlength/2); i < NBSlength; i++){
             newNBS[i] = other.arrayNBS[i];
         }
 
+        //membuat individu baru dengan NBS yang baru
         Individual child = new Individual(newNBS, this.arraySoal, this.NBS, this.random);
 
+        //return child tersebut
         return child;
     }
 
+    //method untuk melakukan mutasi
     public void doMutation(){
+        //looping sepanjang array NBS 
         for(int i = 0; i < NBS.size(); i++){
+            //jika bertemu 3 atau 1
             if(this.NBS.get(i) == 3 || this.NBS.get(i) == 1){
+                //ganti nilai NBS 3 atau 1 tersebut dengan random baru antara 1 - 4
                 this.arrayNBS[i] = this.random.nextInt(5 - 1) + 1;
             }
+            //jika bertemu 2, ganti nilai NBS 2 tersebut dengan random baru antara 1 - 6
             else if (this.NBS.get(i) == 2){
                 this.arrayNBS[i] = this.random.nextInt(7 - 1) + 1;
             }
+            //jika bertemu 0 atau 4, array NBS tetap 1
             else if(this.NBS.get(i) == 0 || this.NBS.get(i) == 4){
                 this.arrayNBS[i] = 1;
             }
         }
     }
 
+    //setelah method-method placeLamp(), checkLightingOtherLamp() dan checkNBSConstraint() dijalankan, maka akan didapat fitness individu ini 
     private void setFitness(){
         //menaruh lampu sesuai kombinasi arrayNBS
         this.placeLamp();
@@ -104,6 +122,9 @@ public class Individual {
         System.out.println();
     }
 
+    //printNBS, printArrayJawaban, printArraySoal hanya untuk menampilkan isi masing-masing array
+    //semuanya dilakukan dengan memprint satu-persatu elemen array dari awal array hingga akhir array
+    //terdapat if dan else hanya untuk menambah spasi untuk merapikan hasil print
     public void printArrayJawaban(){
         int length = this.arraySoal.length;
         for(int i = 0; i < length; i++){
@@ -135,11 +156,6 @@ public class Individual {
             System.out.println();
         }
     }
-
-    //printNBS, printArrayJawaban, printArraySoal hanya untuk melihat isi masing-masing array
-    //semuanya dilakukan dengan memprint satu-persatu elemen array dari awal array hingga akhir array
-    //terdapat if dan else hanya untuk menambah spasi untuk merapikan hasil print
-
 
     private void checkNBSConstraint(){
         int length = this.arraySoal.length; //mendapatkan panjang array

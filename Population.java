@@ -102,62 +102,67 @@ public class Population {
 
         //menentukan kemungkinan setiap individu dipilih menjadi parent
         for (int i = 0; i < this.population.size(); i++) {
-            //kemungkinan dipilih menjadi parent adalah 1.0 - fitness individu tersebut dibagi jumlah fitness seluruh individu, sehingga individu dengan fitness
+            //kemungkinan dipilih menjadi parent adalah fitness individu tersebut dibagi jumlah fitness seluruh individu
             ((Individual) this.population.get(i)).setParentProbability(1.0 * this.population.get(i).getFitness() / sumfitness);
         }
+        //memilih 2 parent
         for (int n = 0; n < 2; n++) {
-            int i = -1;
-            double prob = this.random.nextDouble();
+            int i = -1; //index untuk mendapat individu dari arraylist
+            double prob = this.random.nextDouble(); //kemungkinan yang dirandom
             double sum = 0.0;
             do {
-                i++;
-                sum = sum + this.population.get(i).getParentProbability();
-            } while(sum < prob);
-            parents[n] = this.population.get(i);
+                i++; //index bertambah
+                sum = sum + this.population.get(i).getParentProbability(); //sum bertambah dengan nilai kemungkinan parent tersebut dipilih
+            } while(sum < prob); //looping jika sum < prob
+            //jika keluar dari loop, akan didapat suatu index i
+            parents[n] = this.population.get(i); //individu di index tersebut akan menjadi parent
         }
         return parents;
     }
 
+    //method untuk mendapatkan individual terbaik dari suatu populasi
     public Individual getBestIndividual(){
-        int best = Integer.MAX_VALUE;
-        int index = 0;
-        int bestIndex = 0;
+        int best = Integer.MAX_VALUE; //best awalnya adalah max value integer
+        int index = 0; //index untuk iterasi dimulai dari 0
+        int bestIndex = 0; //index dari individual terbaik
 
+        //loop jika belum didapat individu dengan fitness 0 (individu terbaik) atau jika seluruh individu belum dicek
         while(best != 0 && index < this.population.size()){
+            //jika mendapat fitness yang lebih kecil dari best, maka ubah nilai best menjadi fitness tersebut
             if(this.population.get(index).getFitness() < best){
                 best = this.population.get(index).getFitness();
-                bestIndex = index;
-
+                bestIndex = index; //catat index dari individu terbaik
             }
-            index++;
+            index++; //index bertambah
         }
-
-        
-
-        return this.population.get(bestIndex);
+        return this.population.get(bestIndex); //return individu dengan index best (individu terbaik)
     }
 
+    //membuat populasi baru dengan elitism dengan kemungkinan terjadinya elitism adalah elitismRate
     public Population generateNewPopulationWithElitism(double elitismRate){
-        Population newPopulation = new Population(this.random, this.maxPopulationSize);
+        Population newPopulation = new Population(this.random, this.maxPopulationSize); //membuat populasi baru
 
+        //jika nextDouble() < elitismRate, maka terjadi elitism dan best individual populasi ini langsung dimasukkan ke populasi baru
         if (this.random.nextDouble() < elitismRate){
             newPopulation.addIndividual(this.getBestIndividual());
         }
 
+        //return populasi baru
         return newPopulation;
     }
 
+    //mereturn true jika besar populasi sudah = besar populasi maksimal
     public boolean isFilled() {
         return this.maxPopulationSize == this.population.size();
     }
 
-    //Method untuk mengimport soal dari file.txt
-    public static int[][] importFile(String fileName) throws IOException {
+    //Method untuk mengimport soal dari file .txt menjadi array 2D
+    public int[][] importFile(String fileName) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(fileName));
         int[][] numArray;
         String line = reader.readLine();
         if (line == null) {
-            throw new IllegalArgumentException("There was no 1st line.");
+            throw new IllegalArgumentException("Tidak ada baris 1");
         }
         String[] dimensions = line.split("\\s+");
         try {
@@ -165,7 +170,7 @@ public class Population {
             int cols = Integer.parseInt(dimensions[1]);
             numArray = new int[rows][cols];
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("First line of file has to be 'rows cols'");
+            throw new IllegalArgumentException("Baris 1 menyatakan jumlah baris dan kolom");
         }
     
         int row = 0; 
@@ -173,39 +178,25 @@ public class Population {
         while ((line = reader.readLine()) != null && row < numArray.length) {
             String[] tokens = line.split("\\s+");
             if (tokens.length > numArray[row].length) {
-                throw new IllegalArgumentException("Too many values provided in matrix row " + row);
+                throw new IllegalArgumentException("Terlalu banyak nilai di baris " + row);
             }
-            // to less values will be filled with 0. If you don't want that
-            // you have to uncomment the next 3 lines.
-            //if (tokens.length < numArray[row].length) {
-            //  throw new IllegalArgumentException("Not enough values provided in matrix row " + row);
-            //}
+
             for(int column = 0; column < tokens.length; column++) {
                 try {
                     int value = Integer.parseInt(tokens[column]);
                     numArray[row][column] = value; 
                 } catch (NumberFormatException e) {
-                    throw new IllegalArgumentException("Non numeric value found in matrix row " + row + ", column " + column);
+                    throw new IllegalArgumentException("Nilai non numeric ditemukan di baris " + row + ", kolom " + column);
                 }
             }
             row++;
         }
-        if (line != null) {
-            // there were too many rows provided.
-            // Superflous ones are ignored.
-            // You can also throw exception, if you want.
-        }
-        if (row < numArray.length) {
-            // There were too less rows in the file. If that's OK, the
-            // missing rows will be interpreted as all 0.
-            // If that's OK with you, you can comment out this whole
-            // if block
-            throw new IllegalArgumentException("Expected " + numArray.length + " rows, there only were " + row);
-        }
+        //close reader
         try {
-            reader.close(); // never forget to close a stream.
+            reader.close();
         } catch (IOException e) { }
 
+        //return array2D yang menjadi soal
         return numArray;
     }
 }

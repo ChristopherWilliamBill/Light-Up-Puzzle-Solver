@@ -5,14 +5,15 @@ import java.io.*;
 
 public class Population {
 
-    public ArrayList<Individual> population;
-    private Random random;
-    private int maxPopulationSize;
-    private int populationSize = 0;
-    private int[][] soal;
-    private int NumberOfBlackSquares;
-    private LinkedList<Integer> linkedList;
+    public ArrayList<Individual> population; //arraylist of individual
+    private Random random; //objek random
+    private int maxPopulationSize; //jumlah individual maksimum
+    private int populationSize; //jumlah individu di populasi ini
+    private int[][] soal; //soal
+    private int NumberOfBlackSquares; //jumlah kotak clue (kotak 0 1 2 3 4)
+    private LinkedList<Integer> linkedList; //linkedlist untuk menyimpan isi kotak clue tersebut
 
+    //Constructor
     public Population(Random random, int maxPopulationSize) {
         this.population = new ArrayList<Individual>();
 		this.random = random;
@@ -27,6 +28,9 @@ public class Population {
 
         //inisialisi variabel NumberOfBlackSquares (NBS) untuk menghitung banyaknya kotak  0 1 2 3 4 yang menjadi soal/clue penempatan lampu
         this.NumberOfBlackSquares = 0;
+
+        //jumlah individu awalnya 0
+        this.populationSize = 0;
         
         //linked list digunakan untuk menyimpan nilai setiap kotak NBS
         this.linkedList = new LinkedList<Integer>();
@@ -34,7 +38,7 @@ public class Population {
         //iterasi seluruh soal
         for(int i = 0; i < soal.length; i++){
             for(int j = 0; j < soal[i].length; j++){
-                //jika ada kotak selain -1, artinya kotak tersebut adalah kotak NBS
+                //jika ada kotak > -1, artinya kotak tersebut adalah kotak NBS
                 if(soal[i][j] > -1){
                     NumberOfBlackSquares++; //maka banyaknya NBS bertambah
                     linkedList.add(soal[i][j]); //dan catat nilai kotak tersebut di linkedlist
@@ -44,9 +48,11 @@ public class Population {
     }
 
     public void generateRandomPopulation() {
+        //looping membuat individu sebanyak maxPopulationSize
         for (int i = 0; i < this.maxPopulationSize; i++) {
-
+            //membuat array yang berisi kombinasi NBS seperti pada KombinasiNBS.txt
             int[] NBS = new int[this.NumberOfBlackSquares];
+            //looping sepanjang array NBS
             for(int j = 0; j < this.NumberOfBlackSquares; j++){
                 //mengisi variabel temp dengan nilai linkedlist berisi numbered square
                 int temp = this.linkedList.get(j);
@@ -121,10 +127,12 @@ public class Population {
         return this.population.get(bestIndex);
     }
 
-
-    public Population generateNewPopulationWithElitism(){
+    public Population generateNewPopulationWithElitism(double elitismRate){
         Population newPopulation = new Population(this.random, this.maxPopulationSize);
-        newPopulation.addIndividual(this.getBestIndividual());
+
+        if (this.random.nextDouble() < elitismRate){
+            newPopulation.addIndividual(this.getBestIndividual());
+        }
 
         return newPopulation;
     }

@@ -66,7 +66,7 @@ public class IndividualStepTwo {
                 //looping sepanjang array NL
         for(int i = 0; i < NL.size(); i++){
                 //generate antara 0 dan 1 dan dimasukkan pada arrayNL
-                this.arrayNL[i] = this.random.nextInt(3 - 1) + 1;
+                this.arrayNL[i] = this.random.nextInt(2);
         }
     }
     //setelah method-method placeLamp(), checkLightingOtherLamp(),heckNBSConstraint() ,dan checkMinusOne dijalankan, maka akan didapat fitness individu ini 
@@ -121,8 +121,6 @@ public class IndividualStepTwo {
         int length = this.arraySoal.length; //mendapatkan panjang array
         int NLCounter = 0; //variabel untuk iterasi arrayNl, mulai dari 0
 
-        //menggunakan try catch untuk menaruh lampu, jika lampu ditaruh di luar batas index, maka fitness + 1
-
         //iterasi sepanjang arraySoal
         for(int i = 0; i < length; i++){
             for(int j = 0; j < length; j++){
@@ -137,7 +135,6 @@ public class IndividualStepTwo {
                 }
             }
         }
-        
     }
 
     private void checkLightingOtherLamp(){

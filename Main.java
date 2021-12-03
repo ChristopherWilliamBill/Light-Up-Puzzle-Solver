@@ -37,10 +37,10 @@ public class Main{
         int seed = 1234120;
         Random random = new Random(seed); //membuat objek random
 
-        LightUp lightUp = new LightUp(random, 1000, 0.85, 0.75, 0.5); //membuat objek LightUp untuk memecahkan tahap 1 
+        LightUp lightUp = new LightUp(random, 100, 0.85, 0.75, 0.5); //membuat objek LightUp untuk memecahkan tahap 1 
         Individual best = lightUp.run(); //mendapatkan individu terbaik dari tahap 1.
 
-        LightUpStepTwo lightUpTwo = new LightUpStepTwo(random, 1000, 0.85,0.75,best.getArrayJawaban()); //membuat objek LightUpStepTwo untuk memecahkan tahap 2
+        LightUpStepTwo lightUpTwo = new LightUpStepTwo(random, 100, 0.85,0.75,best.getArrayJawaban(),0.5); //membuat objek LightUpStepTwo untuk memecahkan tahap 2
         IndividualStepTwo bestTwo = lightUpTwo.run(); //mendapatkan individu terbaik dari tahap 2 (puzzle selesai).
 
         //Menampilkan hasilnya, yaitu fitness yang didapatkan, dan array hasilnya.

@@ -7,13 +7,15 @@ public class LightUpStepTwo {
     private double crossoverRate;
     private double mutationRate;
     private int [][] jawaban;
+    private double elitismRate;
 
-    public LightUpStepTwo(Random random, int totalGeneration, double crossoverRate, double mutationRate,int [][]jawaban){
+    public LightUpStepTwo(Random random, int totalGeneration, double crossoverRate, double mutationRate,int [][]jawaban, double elitismRate){
         this.random = random;
         this.totalGeneration = totalGeneration;
         this.crossoverRate = crossoverRate;
         this.mutationRate = mutationRate;
         this.jawaban = jawaban;
+        this.elitismRate = elitismRate;
     }
 
     public IndividualStepTwo run(){
@@ -23,7 +25,7 @@ public class LightUpStepTwo {
         int generation = 1;
 
         while(!terminate(generation)){
-            PopulationStepTwo newPopulation = currPopulation.generateNewPopulationWithElitism();
+            PopulationStepTwo newPopulation = currPopulation.generateNewPopulationWithElitism(this.elitismRate);
 
             while(newPopulation.isFilled() == false){
                 IndividualStepTwo[] parents =  currPopulation.selectParent();

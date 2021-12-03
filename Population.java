@@ -75,24 +75,34 @@ public class Population {
         }
     }
 
+    //menambahkan individu baru ke populasi
     public boolean addIndividual(Individual newInd) {
+        //jika sudah penuh, maka return false
         if (this.populationSize >= this.maxPopulationSize){
             return false;
         } 
+        //jika belum penuh, tambah individu, besar populasi bertambah, dan return true
         this.population.add(newInd);
         this.populationSize++;
         return true;
     }
 
-    public Individual[] selectParent() {    //roulette wheel
+    //memilih parent berdasarkan roulette wheel
+    public Individual[] selectParent() {
+        //dipilih 2 parent dan disimpan di array dengan panjang 2
         Individual[] parents = new Individual[2];
 
+        //jumlah seluruh fitness dari individu
         int sumfitness = 0;
+        //iterasi seluruh individu 
         for (int i = 0; i < this.population.size(); i++) {
+            //dan jumlahkan semua fitnessnya
             sumfitness += this.population.get(i).getFitness();
         }
 
+        //menentukan kemungkinan setiap individu dipilih menjadi parent
         for (int i = 0; i < this.population.size(); i++) {
+            //kemungkinan dipilih menjadi parent adalah 1.0 - fitness individu tersebut dibagi jumlah fitness seluruh individu, sehingga individu dengan fitness
             ((Individual) this.population.get(i)).setParentProbability(1.0 * this.population.get(i).getFitness() / sumfitness);
         }
         for (int n = 0; n < 2; n++) {

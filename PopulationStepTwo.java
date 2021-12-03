@@ -103,10 +103,12 @@ public class PopulationStepTwo{
         return this.populationsteptwo.get(bestIndex);
     }
 
-    public PopulationStepTwo generateNewPopulationWithElitism(){
-        PopulationStepTwo newPopulation = new PopulationStepTwo(this.random, this.maxPopulationSize,this.jawaban);
-        newPopulation.addIndividualStepTwo(this.getBestIndividual());
+    public PopulationStepTwo generateNewPopulationWithElitism(double elitismRate){
+        PopulationStepTwo newPopulation = new PopulationStepTwo(this.random, this.maxPopulationSize, this.jawaban);
 
+        if (this.random.nextDouble() < elitismRate){
+            newPopulation.addIndividual(this.getBestIndividual());
+        }
         return newPopulation;
     }
 

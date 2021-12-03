@@ -2,84 +2,93 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public class IndividualStepTwo {
-    private int[] arrayNL; 
-    private int[][] arraySoal;
-    private int[][] arrayJawaban2;
-    private double parentProbability;
-    private LinkedList<Integer> NL;
-    private Random random;
+    private int[] arrayNL; //berisi bilangan-bilangan kombinasi ketersediaan lampu untuk setiap NL
+    private int[][] arraySoal; //soal (pada kasus ini adalah array yang didapat dari proses step 1)
+    private int[][] arrayJawaban2;//jawaban
+    private double parentProbability; //kemungkinan individu dipilih menjadi parent
+    private LinkedList<Integer> NL; 
+    private Random random;; //objek random
+     //fitness terbaik adalah 0
+    //jika semua lampu dari hasil random arrayNL ditempati, dan terjadi error, maka fitness akan bertambah.
     private int fitness; 
 
+    //Constructor
     public IndividualStepTwo(int[] arrayNL, int[][] arraySoal, LinkedList<Integer> linkedList, Random r){
         this.arraySoal= arraySoal;
-        this.arrayJawaban2 = new int[arraySoal.length][arraySoal.length];
-        this.parentProbability = 0;
+        this.arrayJawaban2 = new int[arraySoal.length][arraySoal.length]; //array jawaban panjangnya sama dengan array soal
+        this.parentProbability = 0; //kemungkinan menjadi parent awalnya 0, dan diubah ketika sudah mendapat fitness individu dan fitness populasi
         this.random = r;
 
+        //arrayJawaban pada awalnya sama dengan arraySoal
         for(int i = 0; i < arraySoal.length; i++){
             for(int j = 0; j < arraySoal.length; j++){
                 this.arrayJawaban2[i][j] = arraySoal[i][j];
             }
         }
 
-        this.fitness = 0;
+        this.fitness = 0; //fitness awalnya 0
         this.arrayNL = arrayNL;
         this.NL = linkedList;
+        //method untuk mendapatkan fitness setiap individu
         this.setFitness();
     }
 
+    //method untuk mengubah nilai parentProbability ketika sudah mendapat fitness individu dan fitness populasi
     public void setParentProbability(double p){
         this.parentProbability = p;
     }
-
+    //mereturn parent probability
     public double getParentProbability(){
         return this.parentProbability;
     }
-
+    //method untuk melakukan crossover
+    //crossover dilakukan dengan membagi array Nl parent menjadi 2
+    //kemudian 1/2 dari NL parent 1, dan 1/2 dari Nl parent 2 digabung untuk menjadi 1 child baru
     public IndividualStepTwo doCrossover(IndividualStepTwo other){
-        int NLlength = this.arrayNL.length;
-        int[] newNL = new int[NLlength];
-
+        int NLlength = this.arrayNL.length;//mendapatkan panjang
+        int[] newNL = new int[NLlength]; //Nl baru untuk child
+        //1/2 dari Nl parent 1 menjadi 1/2 dari newNBS dari 0 sampai tengah
         for(int i = 0; i < NLlength / 2; i++){
             newNL[i] = this.arrayNL[i];
         }
 
+        //1/2 dari NL parent 2 menjadi 1/2 dari newNL dari tengah sampai akhir
         for(int i = (int) Math.ceil(NLlength/2); i < NLlength; i++){
             newNL[i] = other.arrayNL[i];
         }
-
+        //membuat individu baru dengan NL yang baru
         IndividualStepTwo child = new IndividualStepTwo(newNL, this.arraySoal, this.NL, this.random);
-
+        //return child tersebut
         return child;
     }
-
+    //method untuk melakukan mutasi
     public void doMutation(){
+                //looping sepanjang array NL
         for(int i = 0; i < NL.size(); i++){
+                //generate antara 0 dan 1 dan dimasukkan pada arrayNL
                 this.arrayNL[i] = this.random.nextInt(3 - 1) + 1;
         }
     }
-
+    //setelah method-method placeLamp(), checkLightingOtherLamp(),heckNBSConstraint() ,dan checkMinusOne dijalankan, maka akan didapat fitness individu ini 
     private void setFitness(){
         //menaruh lampu sesuai kombinasi arrayNBS
         this.placeLamp();
         //mengecek jika lampu menyinari lampu lain
         this.checkLightingOtherLamp();
-        this.checkNBSConstraint();
+         //mengecek jika penempatan lampu tidak sesuai dengan aturan NL
+        this.checkNLConstraint();
+        //mengecek jika masih terdapat kotak yang -1 pada array NL
         this.checkMinusOne();
       
     }
-
+    //mengembalikan fitness
     public int getFitness(){
         return this.fitness;
     }
 
-    public void printNBS(){
-        for(int i = 0; i < arrayNL.length; i++){
-            System.out.print(arrayNL[i] + " ");
-        }
-        System.out.println();
-    }
-
+    //printArrayJawaban, printArraySoal hanya untuk menampilkan isi masing-masing array
+    //semuanya dilakukan dengan memprint satu-persatu elemen array dari awal array hingga akhir array
+    //terdapat if dan else hanya untuk menambah spasi untuk merapikan hasil print
     public void printArraySoal(){
         int length = this.arraySoal.length;
         for(int i = 0; i < length; i++){
@@ -110,7 +119,7 @@ public class IndividualStepTwo {
 
     private void placeLamp(){
         int length = this.arraySoal.length; //mendapatkan panjang array
-        int NLCounter = 0; //variabel untuk iterasi arrayNBS, mulai dari 0
+        int NLCounter = 0; //variabel untuk iterasi arrayNl, mulai dari 0
 
         //menggunakan try catch untuk menaruh lampu, jika lampu ditaruh di luar batas index, maka fitness + 1
 
@@ -216,16 +225,16 @@ public class IndividualStepTwo {
     }
 
     public void checkMinusOne(){
-        for(int i = 0;i< arrayJawaban2.length;i++){
+        for(int i = 0;i< arrayJawaban2.length;i++){ //iterasi seluruh array jawaban
             for(int j = 0;j< arrayJawaban2.length;j++){
-                if(arrayJawaban2[i][j] == -1){
-                    this.fitness+=1;
+                if(arrayJawaban2[i][j] == -1){  //jika terdapat -1 pada array jawaban
+                    this.fitness+=1;    //menambah nilai fitness
                 }
             }
         }
     }
 
-    private void checkNBSConstraint(){
+    private void checkNLConstraint(){
         int length = this.arraySoal.length; //mendapatkan panjang array
 
         //iterasi seluruh array jawaban

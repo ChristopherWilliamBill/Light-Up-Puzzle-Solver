@@ -8,21 +8,23 @@ public class LightUpStepTwo {
     private double mutationRate;   //kemungkinan terjadinya mutasi
     private int [][] jawaban;       //array jawaban yang didapat dari pengerjaan step 1
     private double elitismRate;      //kemungkinan terjadinya elitism
+    private int populationSize;       //besar populasi
 
     //constructor
-    public LightUpStepTwo(Random random, int totalGeneration, double crossoverRate, double mutationRate,int [][]jawaban, double elitismRate){
+    public LightUpStepTwo(Random random, int totalGeneration, double crossoverRate, double mutationRate,int [][]jawaban, double elitismRate, int populationSize){
         this.random = random;
         this.totalGeneration = totalGeneration;
         this.crossoverRate = crossoverRate;
         this.mutationRate = mutationRate;
         this.jawaban = jawaban;
         this.elitismRate = elitismRate;
+        this.populationSize = populationSize;
     }
 
      //method untuk mendapatkan individual terbaik
     public IndividualStepTwo run(){
         //membuat populasi pertama
-        PopulationStepTwo currPopulation = new PopulationStepTwo(this.random, 1000,this.jawaban);
+        PopulationStepTwo currPopulation = new PopulationStepTwo(this.random, this.populationSize, this.jawaban);
         currPopulation.generateRandomPopulation();
         //menyatakan jumlah generasi
         int generation = 1;

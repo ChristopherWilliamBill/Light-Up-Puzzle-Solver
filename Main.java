@@ -1,5 +1,6 @@
 import java.util.Random;
 import java.io.*;
+import java.util.Scanner;
 
 public class Main{
 
@@ -29,27 +30,60 @@ public class Main{
     Tahap 1: menempatkan lampu yang sudah ada clue nya (di sekitar kotak 0 1 2 3 4).  --> LightUp.java
     Tahap 2: menempatkan lampu di sisa tempat yang belum terkena sinar. --> LightUpStepTwo.java
 
+    Parameter didapatkan dari file Param.txt
+    Hasil algoritma akan ditulis di Result.txt
+    Referensi yang digunakan dalam pembuatan kode ini ada di file Referensi.txt
+
+    Anggota Kelompok:
+    Nicholas Khrisna S. - 6181801060
+    Jason - 6181801061
+    Christopher William - 6181901048
+    Filipus - 6181901074
+
     */
 
     public static void main(String[] args) throws IOException,FileNotFoundException {
 
+        Scanner sc = new Scanner(new File("Param.txt")); //membuat objek scanner;
+
+        //membaca parameter yang akan digunakan dari file Param.txt menggunakan scanner;
+        int totalGeneration = sc.nextInt();
+        double crossoverRate = sc.nextDouble();
+        double mutationRate = sc.nextDouble();
+        double elitismRate = sc.nextDouble();
+        int populationSize = sc.nextInt();
+        
         //Seed yang digunakan untuk object random di seluruh algoritma
-        int seed = 1234120;
+        int seed = sc.nextInt();
         Random random = new Random(seed); //membuat objek random
 
-        LightUp lightUp = new LightUp(random, 100, 0.85, 0.75, 0.5); //membuat objek LightUp untuk memecahkan tahap 1 
+        String namaSoal = sc.next();
+
+        sc.close(); //menutup scanner
+
+        System.out.println("Menjalankan algoritma genetik . . .");
+        System.out.println("Hasil akan terlihat pada file Result.txt saat algoritma selesai.");
+
+        LightUp lightUp = new LightUp(random, totalGeneration, crossoverRate, mutationRate, elitismRate, populationSize, namaSoal); //membuat objek LightUp untuk memecahkan tahap 1 
         Individual best = lightUp.run(); //mendapatkan individu terbaik dari tahap 1.
 
-        LightUpStepTwo lightUpTwo = new LightUpStepTwo(random, 100, 0.85,0.75,best.getArrayJawaban(),0.5); //membuat objek LightUpStepTwo untuk memecahkan tahap 2
+        LightUpStepTwo lightUpTwo = new LightUpStepTwo(random, totalGeneration, crossoverRate, mutationRate, best.getArrayJawaban(), elitismRate, populationSize); //membuat objek LightUpStepTwo untuk memecahkan tahap 2
         IndividualStepTwo bestTwo = lightUpTwo.run(); //mendapatkan individu terbaik dari tahap 2 (puzzle selesai).
 
         PrintWriter outputFile = new PrintWriter("Result.txt"); // membuat objek printwriter
         //inisialiasi variabel string
-        String string = " ";
+        String string = "";
         //memasukkan nilai string 
-        string = "Step One : " +"\n" + "Fitness Value : " + best.getFitness() + "\n" + best.getArrayJawabanAsString() + "\n" + "================================" + "\n" + 
-        "Step Two : " + "\n" +"Fitness Value : "+ bestTwo.getFitness() + "\n" + bestTwo.getArrayJawabanAsString() + "\n" ;
-        //memasukkan isi variabel string ke outputfile
+        string = "Seed: " + seed + "\n" + 
+        "Total generation: " + totalGeneration+ "\n" + 
+        "Population size: " + populationSize + "\n" + 
+        "Crossover rate: " + crossoverRate + "\n" + 
+        "Mutation rate: " + mutationRate + "\n" + 
+        "Elitism rate: " + elitismRate + "\n" + "\n" +   
+        "Step One : " + "\n" + "Fitness Value : " + best.getFitness() + " (semakin mendekati 0 semakin bagus)" + "\n" + best.getArrayJawabanAsString() + "\n" + "================================" + "\n" + "\n" + 
+        "Step Two : " + "\n" +"Fitness Value : "+ bestTwo.getFitness() + " (semakin mendekati 0 semakin bagus)" + "\n" + bestTwo.getArrayJawabanAsString() + "\n" ;
+
+        //memasukkan isi variabel string ke outputfile dan menampilkannya
         outputFile.println(string);
         //menutup outputfile
         outputFile.close();

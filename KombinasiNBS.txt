@@ -76,5 +76,10 @@ KOMBINASI UNTUK 3
 
 
 
-5 = ada lampu
-6 = tidak ada lampu
+5 = taruh lampu
+6 = jangan taruh lampu
+
+Contoh:
+Jika ditemukan kotak clue 3, maka akan digenerate angka random antara 1 sampai 4. Jika hasil random adalah 2, maka akan ditaruh lampu di kiri, bawah, dan kanan kotak clue tersebut.
+
+Jika ditemukan kotak clue 2, dan hasil generate angka random adalah 5, maka akan ditaruh lampu di kiri dan kanan kotak clue tersebut.

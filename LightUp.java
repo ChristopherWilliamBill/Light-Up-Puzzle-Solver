@@ -7,21 +7,25 @@ public class LightUp {
     private double crossoverRate; //kemungkinan terjadinya crossover
     private double mutationRate; //kemungkinan terjadinya mutasi
     private double elitismRate; //kemungkinan terjadinya elitism
+    private int populationSize; //besar populasi 
+    private String namaSoal; //nama soal yang akan dipecahkan
 
     //Constructor
-    public LightUp(Random random, int totalGeneration, double crossoverRate, double mutationRate, double elitismRate){
+    public LightUp(Random random, int totalGeneration, double crossoverRate, double mutationRate, double elitismRate, int populationSize, String namaSoal){
         this.random = random;
         this.totalGeneration = totalGeneration;
         this.crossoverRate = crossoverRate;
         this.mutationRate = mutationRate;
         this.elitismRate = elitismRate;
+        this.populationSize = populationSize;
+        this.namaSoal = namaSoal;
     }
 
     //method untuk mendapatkan individual terbaik
     public Individual run(){
 
         //membuat populasi pertama
-        Population currPopulation = new Population(this.random, 1000);
+        Population currPopulation = new Population(this.random, this.populationSize, this.namaSoal);
         currPopulation.generateRandomPopulation();
 
         //menyatakan jumlah generasi

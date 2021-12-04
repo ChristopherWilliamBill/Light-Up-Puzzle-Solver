@@ -133,11 +133,11 @@ public class Individual {
         int length = this.arraySoal.length;
         for(int i = 0; i < length; i++){
             for(int j = 0; j < length; j++){
-                if( i == 0){
-                    string = Integer.toString(this.arrayJawaban[i][j]) + " " ;
-                }else{
+                if(this.arrayJawaban[i][j] < 0){
                     string = string + Integer.toString(this.arrayJawaban[i][j]) + " " ;
-                }
+                }else{
+                    string = string + " " + Integer.toString(this.arrayJawaban[i][j]) + " ";
+                }   
             }
             string = string + "\n";
         }

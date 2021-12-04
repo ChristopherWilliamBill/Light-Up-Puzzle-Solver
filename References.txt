@@ -1,2 +1,3 @@
-import file from txt using BufferedReader : https://stackoverflow.com/questions/14487737/how-do-i-read-a-file-into-a-2d-array
-https://www.researchgate.net/publication/220174496_A_Nested_Two-steps_Evolutionary_Algorithm_for_the_Light-up_Puzzle
+import file txt menggunakan BufferedReader : https://stackoverflow.com/questions/14487737/how-do-i-read-a-file-into-a-2d-array
+menulis hasil algoritma ke file txt: https://www.youtube.com/watch?v=-FDphiTnmCE&t=201s
+ide encoding: https://www.researchgate.net/publication/220174496_A_Nested_Two-steps_Evolutionary_Algorithm_for_the_Light-up_Puzzle

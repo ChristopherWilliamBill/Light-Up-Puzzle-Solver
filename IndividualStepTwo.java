@@ -47,7 +47,7 @@ public class IndividualStepTwo {
     public IndividualStepTwo doCrossover(IndividualStepTwo other){
         int NLlength = this.arrayNL.length;//mendapatkan panjang
         int[] newNL = new int[NLlength]; //Nl baru untuk child
-        //1/2 dari Nl parent 1 menjadi 1/2 dari newNBS dari 0 sampai tengah
+        //1/2 dari Nl parent 1 menjadi 1/2 dari newNL dari 0 sampai tengah
         for(int i = 0; i < NLlength / 2; i++){
             newNL[i] = this.arrayNL[i];
         }
@@ -63,15 +63,15 @@ public class IndividualStepTwo {
     }
     //method untuk melakukan mutasi
     public void doMutation(){
-                //looping sepanjang array NL
+        //looping sepanjang array NL
         for(int i = 0; i < NL.size(); i++){
-                //generate antara 0 dan 1 dan dimasukkan pada arrayNL
-                this.arrayNL[i] = this.random.nextInt(2);
+            //generate antara 0 dan 1 yang baru dan dimasukkan pada arrayNL
+            this.arrayNL[i] = this.random.nextInt(2);
         }
     }
-    //setelah method-method placeLamp(), checkLightingOtherLamp(),heckNBSConstraint() ,dan checkMinusOne dijalankan, maka akan didapat fitness individu ini 
+    //setelah method-method placeLamp(), checkLightingOtherLamp(), checkNLConstraint() ,dan checkMinusOne dijalankan, maka akan didapat fitness individu ini 
     private void setFitness(){
-        //menaruh lampu sesuai kombinasi arrayNBS
+        //menaruh lampu sesuai kombinasi arrayNL
         this.placeLamp();
         //mengecek jika lampu menyinari lampu lain
         this.checkLightingOtherLamp();
@@ -103,6 +103,20 @@ public class IndividualStepTwo {
         }
     }
 
+    public void printArrayJawaban(){
+        int length = this.arrayJawaban2.length;
+        for(int i = 0; i < length; i++){
+            for(int j = 0; j < length; j++){
+                if(arrayJawaban2[i][j] < 0){
+                    System.out.print(this.arrayJawaban2[i][j] + "  ");
+                }else{
+                    System.out.print(" " + this.arrayJawaban2[i][j] + "  ");
+                }
+            }
+            System.out.println();
+        }
+    }
+
     //fungsi yang mengembalikan array jawaban dalam bentuk string
     public String getArrayJawabanAsString(){
         //inisialiasi nilai string
@@ -110,10 +124,10 @@ public class IndividualStepTwo {
         int length = this.arraySoal.length;
         for(int i = 0; i < length; i++){
             for(int j = 0; j < length; j++){
-                if( i == 0){
-                    string = Integer.toString(this.arrayJawaban2[i][j]) + " " ;
-                }else{
+                if(this.arrayJawaban2[i][j] < 0){
                     string = string + Integer.toString(this.arrayJawaban2[i][j]) + " " ;
+                }else{
+                    string = string + " " + Integer.toString(this.arrayJawaban2[i][j]) + " ";
                 }
             }
             string = string + "\n";
@@ -128,19 +142,21 @@ public class IndividualStepTwo {
         //iterasi sepanjang arraySoal
         for(int i = 0; i < length; i++){
             for(int j = 0; j < length; j++){
+                //jika ditemukan kotak yang masih belum ada lampu (-1)
                 if(arraySoal[i][j] == -1){
-                    if(arrayNL[NLCounter] == 1){
+                    if(arrayNL[NLCounter] == 1){ //jika arrayNL = 1, maka akan ditaruh lampu di kotak itu
                         arrayJawaban2[i][j] = 5;
                     }
-                    else {
+                    else { //jika arrayNL == 0, maka tidak ditaruh lampu
                         arrayJawaban2[i][j] = -1;
                     }
-                    NLCounter++;
+                    NLCounter++; //index bertambah
                 }
             }
         }
     }
 
+    //cara kerja method ini sama dengan step 1
     private void checkLightingOtherLamp(){
         int length = this.arraySoal.length; //mendapatkan panjang array
 
@@ -229,12 +245,13 @@ public class IndividualStepTwo {
         for(int i = 0;i< arrayJawaban2.length;i++){ //iterasi seluruh array jawaban
             for(int j = 0;j< arrayJawaban2.length;j++){
                 if(arrayJawaban2[i][j] == -1){  //jika terdapat -1 pada array jawaban
-                    this.fitness+=1;    //menambah nilai fitness
+                    this.fitness+=1;    //menambah nilai fitness dengan 1
                 }
             }
         }
     }
 
+    //cara kerja method ini sama dengan step 1
     private void checkNLConstraint(){
         int length = this.arraySoal.length; //mendapatkan panjang array
 
@@ -773,8 +790,4 @@ public class IndividualStepTwo {
             }
         }
     }
-
-
-    
-
 }

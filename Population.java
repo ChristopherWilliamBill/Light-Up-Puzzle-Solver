@@ -12,16 +12,18 @@ public class Population {
     private int[][] soal; //soal
     private int NumberOfBlackSquares; //jumlah kotak clue (kotak 0 1 2 3 4)
     private LinkedList<Integer> linkedList; //linkedlist untuk menyimpan isi kotak clue tersebut
+    private String namaSoal;
 
     //Constructor
-    public Population(Random random, int maxPopulationSize) {
+    public Population(Random random, int maxPopulationSize, String namaSoal) {
         this.population = new ArrayList<Individual>();
 		this.random = random;
         this.maxPopulationSize = maxPopulationSize;
+        this.namaSoal = namaSoal;
 
         //mengimport array soal
         try {
-            this.soal = importFile("Test/10x10_hard");
+            this.soal = importFile(this.namaSoal);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -140,7 +142,7 @@ public class Population {
 
     //membuat populasi baru dengan elitism dengan kemungkinan terjadinya elitism adalah elitismRate
     public Population generateNewPopulationWithElitism(double elitismRate){
-        Population newPopulation = new Population(this.random, this.maxPopulationSize); //membuat populasi baru
+        Population newPopulation = new Population(this.random, this.maxPopulationSize, this.namaSoal); //membuat populasi baru
 
         //jika nextDouble() < elitismRate, maka terjadi elitism dan best individual populasi ini langsung dimasukkan ke populasi baru
         if (this.random.nextDouble() < elitismRate){
